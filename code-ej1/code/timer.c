@@ -10,9 +10,9 @@
 
 //				Timer0
 void TIMER0_Init(){
-	OCR0A = 249;            //124 para 8MHz y 248 para 16MHz
-	TCCR0A = (1<<WGM01);   // Modo CTC, clock interno, prescalador 64
-	TCCR0B = (1<<CS01)|(1<<CS00);   // Modo CTC, clock interno, prescalador 64
+	OCR0A  = 78;            //124 para 8MHz y 248 para 16MHz
+	TCCR0A = (1<<WGM01);   // Modo CTC, clock interno, prescalador 8
+	TCCR0B = (1<<CS01);   // Modo CTC, clock interno, prescalador 8
 	TIMSK0 = (1<<OCIE0A);   // Habilito Timer 0 en modo de interrupci�n de comparaci�n
 }
 
