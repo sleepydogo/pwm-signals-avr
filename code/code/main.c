@@ -5,15 +5,7 @@
  * Author : Tom
  */ 
 
-#include <avr/io.h>
-#include <>
-
-#define PWM_PERIOD	10
-#define PWM_DELTA	3
-#define PWM_OFF		PORTB &=~(1<<PORTB0)
-#define PWM_ON		PORTB |=(1<<PORTB0)
-#define PWM_START	DDRB |= (1<<PORTB0)
-
+#include "main.h"
 
 /*
 	Se inicializa en -1 para que cuando se ejecute por primera vez el PWM_SOFTWARE_UPDATE
@@ -38,12 +30,9 @@ void PWM_SOFTWARE_UPDATE(void) {
 int main(void)
 {
 	PWM_START;
-	
+	TIMER0_Init();
+	TIMER1_Init();
+	sei();
 	while (1);
-}
-
-
-ISR (TIMER0_COMPA_vect) {
-	PWM_SOFTWARE_UPDATE();
 }
 
