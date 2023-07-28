@@ -98,25 +98,25 @@ void PWM_SOFTWARE_UPDATE(void) {
   a2:	31 f4       	brne	.+12     	; 0xb0 <PWM_SOFTWARE_UPDATE+0x1a>
 		PWM_position = 0;
   a4:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
-		PWM_ON;
+		PWM_OFF;
   a8:	85 b1       	in	r24, 0x05	; 5
-  aa:	80 62       	ori	r24, 0x20	; 32
+  aa:	8f 7d       	andi	r24, 0xDF	; 223
   ac:	85 b9       	out	0x05, r24	; 5
   ae:	08 95       	ret
 	} else {
 		if (PWM_position < PWM_DELTA) {
-  b0:	8f 3f       	cpi	r24, 0xFF	; 255
-  b2:	21 f0       	breq	.+8      	; 0xbc <PWM_SOFTWARE_UPDATE+0x26>
-			PWM_ON;
+  b0:	81 11       	cpse	r24, r1
+  b2:	04 c0       	rjmp	.+8      	; 0xbc <PWM_SOFTWARE_UPDATE+0x26>
+			PWM_OFF;
   b4:	85 b1       	in	r24, 0x05	; 5
-  b6:	80 62       	ori	r24, 0x20	; 32
+  b6:	8f 7d       	andi	r24, 0xDF	; 223
   b8:	85 b9       	out	0x05, r24	; 5
   ba:	08 95       	ret
 		}
 		else {
-			PWM_OFF;
+			PWM_ON;
   bc:	85 b1       	in	r24, 0x05	; 5
-  be:	8f 7d       	andi	r24, 0xDF	; 223
+  be:	80 62       	ori	r24, 0x20	; 32
   c0:	85 b9       	out	0x05, r24	; 5
   c2:	08 95       	ret
 
@@ -179,12 +179,12 @@ void TIMER1_Init(){
   fc:	80 63       	ori	r24, 0x30	; 48
   fe:	80 83       	st	Z, r24
 		
-		OCR1A = 255;	
- 100:	8f ef       	ldi	r24, 0xFF	; 255
+		OCR1A = 1;	
+ 100:	81 e0       	ldi	r24, 0x01	; 1
  102:	90 e0       	ldi	r25, 0x00	; 0
  104:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
  108:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
-		OCR1B = 255;
+		OCR1B = 1;
  10c:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
  110:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
  114:	08 95       	ret
