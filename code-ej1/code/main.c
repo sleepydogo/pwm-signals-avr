@@ -5,14 +5,9 @@
  * Author : Tom
  */ 
 
-// OCR1A = blue ; OCR1B = green ; PWM_DELTA = red
+// NOTE: OCR1A = blue ; OCR1B = green ; PWM_DELTA = red
 
 #include "main.h"
-
-/*
-	Se inicializa en -1 para que cuando se ejecute por primera vez el PWM_SOFTWARE_UPDATE
-	se ponga en alto la senial de salida.
-*/
 
 int main(void)
 {
@@ -22,6 +17,8 @@ int main(void)
 	TIMER1_Init();
 	PWM_CHANGE_DELTAS(255,145,1);
 	sei();
-	while (1);
+	while (1) {
+		LED_MEF();
+	}
 }
 
