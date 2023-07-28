@@ -21,10 +21,10 @@ void PWM_SOFTWARE_UPDATE(void) {
 		PWM_OFF;
 	} else {
 		if (PWM_position < PWM_DELTA) {
-			PWM_OFF;
+			PWM_ON;
 		}
 		else {
-			PWM_ON;
+			PWM_OFF;
 		}
 	}
 }

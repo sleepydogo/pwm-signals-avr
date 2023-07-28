@@ -25,9 +25,9 @@ void TIMER1_Init(){
 		TCCR1B |= (1<<WGM12)|(1<<CS12)|(1<<CS10);
 		TCCR1A |= (1<<WGM10)|(1<<COM1A1)|(1<<COM1A0); // Para OC1A
 		TCCR1A |= (1<<COM1B1)|(1<<COM1B0); // Para OC1B
-		
-		OCR1A = 1;	
-		OCR1B = 1;
+
+		OCR1A = 255;			//blue
+		OCR1B = 153;			//green
 }
 
 ISR (TIMER0_COMPA_vect) {
