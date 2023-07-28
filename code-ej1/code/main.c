@@ -10,7 +10,7 @@
 #include "main.h"
 
 
-static t_eSystem eSystem;
+static t_eSystem eSystem = PRENDIENDO;
 static uint8_t mef_flag = 0;
 static uint8_t state_call_count = -1;
 
@@ -23,22 +23,21 @@ void MEF_UPDATE() {
 	switch (eSystem) {
 		case PRENDIENDO:
 			if (state_call_count < 100) {
-				PWM_UPDATE_DELTAS((51/100), (153/100), (255/100));
+				PWM_UPDATE_DELTAS((151/100), (153/100), (255/100));
 			} else {
-				PWM_CHANGE_DELTAS(51,153,255);
 				eSystem = MAX;
 				state_call_count = -1;
 			}
 		break;
 		case MAX:
-			if (state_call_count < 200) {
+			if (state_call_count < 600) {
 				eSystem = APAGANDO;
 				state_call_count = -1;
 			}
 		break;
 		case APAGANDO:
 			if (state_call_count < 100) {
-				PWM_UPDATE_DELTAS(-(51/100), -(153/100), -(255/100));
+				PWM_UPDATE_DELTAS(-(151/100), -(153/100), -(255/100));
 				} else {
 				PWM_CHANGE_DELTAS(1,1,1);
 				eSystem = OFF;
@@ -46,7 +45,7 @@ void MEF_UPDATE() {
 			}
 		break;
 		case OFF:
-			if (state_call_count < 200) {
+			if (state_call_count < 600) {
 				eSystem = PRENDIENDO;
 				state_call_count = -1;
 			}
@@ -57,10 +56,9 @@ void MEF_UPDATE() {
 int main(void)
 {
 	
-	PWM_INIT_OUTPUTS();
 	TIMER0_Init();
 	TIMER1_Init();
-	PWM_CHANGE_DELTAS(255,145,1);
+	PWM_INIT_OUTPUTS();
 	sei();
 	while (1) {
 		if (mef_flag) {
