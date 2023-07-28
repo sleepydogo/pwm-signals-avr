@@ -9,65 +9,32 @@
 
 #include "main.h"
 
-
-static t_eSystem eSystem = PRENDIENDO;
-static uint8_t mef_flag = 0;
-static uint8_t state_call_count = -1;
-
-void SET_MEF_FLAG(void) {
-	mef_flag = 1;
-}
-
-void MEF_UPDATE() {
-	state_call_count++; 
-	switch (eSystem) {
-		case PRENDIENDO:
-			if (state_call_count < 100) {
-				PWM_UPDATE_DELTAS((151/100), (153/100), (255/100));
-			} else {
-				eSystem = MAX;
-				state_call_count = -1;
-			}
-		break;
-		case MAX:
-			if (state_call_count < 600) {
-				eSystem = APAGANDO;
-				state_call_count = -1;
-			}
-		break;
-		case APAGANDO:
-			if (state_call_count < 100) {
-				PWM_UPDATE_DELTAS(-(151/100), -(153/100), -(255/100));
-				} else {
-				PWM_CHANGE_DELTAS(1,1,1);
-				eSystem = OFF;
-				state_call_count = -1;
-			}
-		break;
-		case OFF:
-			if (state_call_count < 600) {
-				eSystem = PRENDIENDO;
-				state_call_count = -1;
-			}
-		break;
-	}
-}
+static uint8_t MEF_flag = 0;
+uint8_t MEF_cont = 0;
 
 int main(void)
 {
 	
 	TIMER0_Init();
 	TIMER1_Init();
+	MEF_Init();
 	PWM_INIT_OUTPUTS();
 	sei();
 	while (1) {
-		if (mef_flag) {
+		if (MEF_flag) {
 			MEF_UPDATE();
-			mef_flag = 0;
+			MEF_flag = 0;
 		}
 	}
 }
 
+ISR (TIMER0_COMPA_vect) {
+	PWM_SOFTWARE_UPDATE();
+	if (++ MEF_cont == 126) { // Cada 5ms se chequea la MEF
+		MEF_flag = 1;
+		MEF_cont = 0;
+	}
+}
 
 
 

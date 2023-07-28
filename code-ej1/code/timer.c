@@ -7,8 +7,6 @@
 
 #include "timer.h"
 
-static uint16_t mef_contador = 0;
-
 //				Timer0	- interrupcion cada 39,4 us aprox
 void TIMER0_Init(){
 	OCR0A  = 78;            
@@ -26,12 +24,4 @@ void TIMER1_Init(){
 		TCCR1B |= (1<<WGM12)|(1<<CS12)|(1<<CS10);
 		TCCR1A |= (1<<WGM10)|(1<<COM1A1)|(1<<COM1A0); // Para OC1A
 		TCCR1A |= (1<<COM1B1)|(1<<COM1B0); // Para OC1B
-}
-
-ISR (TIMER0_COMPA_vect) {
-	PWM_SOFTWARE_UPDATE();
-	if (++mef_contador == 126) {
-		SET_MEF_FLAG();
-		mef_contador = 0;
-	}
 }

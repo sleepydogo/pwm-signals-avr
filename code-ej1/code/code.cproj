@@ -108,10 +108,22 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ADC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ADC.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MEF.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MEF.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="pwm_generator.c">
