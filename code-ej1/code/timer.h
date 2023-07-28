@@ -11,6 +11,7 @@
 
 #include <avr/io.h>
 #include "main.h"
+#include "pwm_generator.h"
 
 void TIMER0_Init();
 void TIMER1_Init();

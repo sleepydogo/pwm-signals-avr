@@ -13,27 +13,14 @@
 	Se inicializa en -1 para que cuando se ejecute por primera vez el PWM_SOFTWARE_UPDATE
 	se ponga en alto la senial de salida.
 */
-static uint8_t PWM_position = -1;
-
-void PWM_SOFTWARE_UPDATE(void) {
-	if (++PWM_position >= PWM_PERIOD) {
-		PWM_position = 0;
-		PWM_OFF;
-	} else {
-		if (PWM_position < PWM_DELTA) {
-			PWM_ON;
-		}
-		else {
-			PWM_OFF;
-		}
-	}
-}
 
 int main(void)
 {
-	PWM_START;
+	
+	PWM_INIT_OUTPUTS();
 	TIMER0_Init();
 	TIMER1_Init();
+	PWM_CHANGE_DELTAS(255,145,1);
 	sei();
 	while (1);
 }

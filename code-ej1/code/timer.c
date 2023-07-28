@@ -8,11 +8,11 @@
 #include "timer.h"
 
 
-//				Timer0
+//				Timer0	- interrupcion cada 39,4 us aprox
 void TIMER0_Init(){
-	OCR0A  = 78;            //124 para 8MHz y 248 para 16MHz
+	OCR0A  = 78;            
 	TCCR0A = (1<<WGM01);   // Modo CTC, clock interno, prescalador 8
-	TCCR0B = (1<<CS01);   // Modo CTC, clock interno, prescalador 8
+	TCCR0B = (1<<CS01);   
 	TIMSK0 = (1<<OCIE0A);   // Habilito Timer 0 en modo de interrupci�n de comparaci�n
 }
 
