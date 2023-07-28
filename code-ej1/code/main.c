@@ -23,19 +23,32 @@ void MEF_UPDATE() {
 	switch (eSystem) {
 		case PRENDIENDO:
 			if (state_call_count < 100) {
-				PWM_CHANGE_DELTAS()
+				PWM_UPDATE_DELTAS((51/100), (153/100), (255/100));
+			} else {
+				PWM_CHANGE_DELTAS(51,153,255);
+				eSystem = MAX;
+				state_call_count = -1;
 			}
 		break;
 		case MAX:
-			if (state_call_count == 100) {
-						
+			if (state_call_count < 200) {
+				eSystem = APAGANDO;
+				state_call_count = -1;
 			}
 		break;
 		case APAGANDO:
+			if (state_call_count < 100) {
+				PWM_UPDATE_DELTAS(-(51/100), -(153/100), -(255/100));
+				} else {
+				PWM_CHANGE_DELTAS(1,1,1);
+				eSystem = OFF;
+				state_call_count = -1;
+			}
 		break;
 		case OFF:
-			if (state_call_count == 100) {
-				
+			if (state_call_count < 200) {
+				eSystem = PRENDIENDO;
+				state_call_count = -1;
 			}
 		break;
 	}

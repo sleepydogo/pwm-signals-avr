@@ -33,3 +33,9 @@ void PWM_CHANGE_DELTAS(uint8_t red, uint8_t green, uint8_t blue) {
 	OCR1B = green;
 	OCR1A = blue;
 }
+
+void PWM_UPDATE_DELTAS(int8_t red, int8_t green, int8_t blue) {
+	delta_red += red;
+	OCR1B += green;
+	OCR1A += blue;
+}

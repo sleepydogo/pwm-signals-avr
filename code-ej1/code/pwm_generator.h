@@ -21,5 +21,7 @@
 void PWM_INIT_OUTPUTS (void);
 void PWM_SOFTWARE_UPDATE (void);
 void PWM_CHANGE_DELTAS(uint8_t red, uint8_t green, uint8_t blue);
+void PWM_UPDATE_DELTAS(int8_t red, int8_t green, int8_t blue);
+
 
 #endif /* PWM_GENERATOR_H_ */
