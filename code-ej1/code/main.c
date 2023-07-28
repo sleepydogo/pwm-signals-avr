@@ -9,6 +9,38 @@
 
 #include "main.h"
 
+
+static t_eSystem eSystem;
+static uint8_t mef_flag = 0;
+static uint8_t state_call_count = -1;
+
+void SET_MEF_FLAG(void) {
+	mef_flag = 1;
+}
+
+void MEF_UPDATE() {
+	state_call_count++; 
+	switch (eSystem) {
+		case PRENDIENDO:
+			if (state_call_count < 100) {
+				PWM_CHANGE_DELTAS()
+			}
+		break;
+		case MAX:
+			if (state_call_count == 100) {
+						
+			}
+		break;
+		case APAGANDO:
+		break;
+		case OFF:
+			if (state_call_count == 100) {
+				
+			}
+		break;
+	}
+}
+
 int main(void)
 {
 	
@@ -18,7 +50,14 @@ int main(void)
 	PWM_CHANGE_DELTAS(255,145,1);
 	sei();
 	while (1) {
-		LED_MEF();
+		if (mef_flag) {
+			MEF_UPDATE();
+			mef_flag = 0;
+		}
 	}
 }
+
+
+
+
 

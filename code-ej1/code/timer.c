@@ -7,6 +7,7 @@
 
 #include "timer.h"
 
+static uint16_t mef_contador = 0;
 
 //				Timer0	- interrupcion cada 39,4 us aprox
 void TIMER0_Init(){
@@ -32,4 +33,8 @@ void TIMER1_Init(){
 
 ISR (TIMER0_COMPA_vect) {
 	PWM_SOFTWARE_UPDATE();
+	if (++mef_contador == 126) {
+		SET_MEF_FLAG();
+		mef_contador = 0;
+	}
 }

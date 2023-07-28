@@ -8,4 +8,11 @@
 #include "timer.h"
 #include "pwm_generator.h"
 
+typedef enum {
+	PRENDIENDO, MAX, APAGANDO, OFF
+} t_eSystem ;
+
+
+void SET_MEF_FLAG(void);
+
 #endif
