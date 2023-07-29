@@ -13,6 +13,10 @@
 void MEF_Init(void);
 void MEF_UPDATE();
 
+#define RED		51
+#define	GREEN	153
+#define BLUE	255		//LABEL un elisir
+
 typedef enum {
 	PRENDIENDO, MAX, APAGANDO, OFF
 } t_eSystem ;

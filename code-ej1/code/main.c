@@ -10,11 +10,10 @@
 #include "main.h"
 
 static uint8_t MEF_flag = 0;
-uint8_t MEF_cont = 0;
+uint16_t MEF_cont = 0;
 
 int main(void)
 {
-	
 	TIMER0_Init();
 	TIMER1_Init();
 	MEF_Init();
@@ -30,7 +29,7 @@ int main(void)
 
 ISR (TIMER0_COMPA_vect) {
 	PWM_SOFTWARE_UPDATE();
-	if (++ MEF_cont == 126) { // Cada 5ms se chequea la MEF
+	if (++ MEF_cont == 1269) { // Cada 50ms se chequea la MEF
 		MEF_flag = 1;
 		MEF_cont = 0;
 	}

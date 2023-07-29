@@ -427,13 +427,13 @@ END GROUP
  .debug_frame   0x00000000       0x34 main.o
  .debug_frame   0x00000034       0x8c timer.o
 
-.debug_str      0x00000000      0x393
+.debug_str      0x00000000      0x3d0
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x169 main.o
                                 0x19d (size before relaxing)
- .debug_str     0x00000371       0x22 timer.o
-                                0x1a1 (size before relaxing)
+ .debug_str     0x00000371       0x5f timer.o
+                                0x1a5 (size before relaxing)
 
 .debug_loc      0x00000000       0xcb
  *(.debug_loc)
