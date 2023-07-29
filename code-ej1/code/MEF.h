@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include "pwm_generator.h"
 #include "ADC.h"
+#include "main.h"
 void MEF_Init(void);
 void MEF_UPDATE();
 

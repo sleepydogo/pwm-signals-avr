@@ -12,7 +12,7 @@ MEF.d MEF.o: .././MEF.c .././MEF.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- .././ADC.h
+ .././main.h .././timer.h .././ADC.h
 
 .././MEF.h:
 
@@ -41,5 +41,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
+
+.././main.h:
+
+.././timer.h:
 
 .././ADC.h:

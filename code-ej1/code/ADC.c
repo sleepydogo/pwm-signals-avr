@@ -6,34 +6,43 @@
  */ 
 
 #include "ADC.h"
+uint8_t lowByte = 0;
+uint8_t highByte = 0;
+uint16_t valorLeido = 0;
 
 void ADC_Init(){
 	
-	DDRC &= ~(1 << PORTC3);
-	
-	// Configurar la referencia de voltaje del ADC a AVCC con ajuste a la izquierda
-	ADMUX |= (0 << REFS1) | (1 << REFS0);
-	ADMUX &= ~(1 << ADLAR);
-	
-	// Configurar el canal del ADC (ADC3 en este caso)
-	ADMUX |= (0 << MUX3) | (0 << MUX2) | (1 << MUX1) | (1 << MUX0);
-	
-	// Habilitar el ADC y configurar el preescalador a 64
-	ADCSRA |= (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1);
+	  // Configure ADC clock prescaler.
+	  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+
+	  // Enable ADC.
+	  ADCSRA |= (1 << ADEN);
+
+	  // Set ADC reference to AVCC.
+	  ADMUX |= (1 << REFS0);
+
+	  // Set ADC channel to 3.
+	  ADMUX |= (1 << MUX0) | (1 << MUX1);
 	
 }
 
 
 uint16_t ADC_Read(void){
 	
-	ADCSRA |= (1 << ADSC);
-	
-	while ((ADCSRA & (1 << ADIF)) == 0);
-	
-	ADCSRA |= (1 << ADIF);
+	// Select ADC channel 3.
+	ADMUX |= (1 << MUX0) | (1 << MUX1);
 
-	uint16_t valorADC = ADC;
+	// Start ADC conversion.
+	ADCSRA |= (1 << ADSC);
+
+	// Wait for conversion to complete.
+	while (ADCSRA & (1 << ADSC));
+
+	// Clear ADIF flag.
+	ADCSRA |= (1 << ADIF);
 	
-	return valorADC;
-	
+	valorLeido = ADC;
+
+	// Return ADC value.
+	return valorLeido;
 }

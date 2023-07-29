@@ -11,6 +11,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "main.h"
 
 #define PWM_PERIOD	255
 #define PWM_ON		PORTB &=~(1<<PORTB5)

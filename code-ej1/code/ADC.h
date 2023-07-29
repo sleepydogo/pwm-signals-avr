@@ -10,6 +10,7 @@
 #define ADC_H_
 
 #include <avr/io.h>
+#include "main.h"
 
 void ADC_Init(void);
 

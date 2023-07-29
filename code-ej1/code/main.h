@@ -7,6 +7,7 @@
 #include "timer.h"
 #include "pwm_generator.h"
 #include "MEF.h"
+#define F_CPU 16000000UL
 
 
 #endif

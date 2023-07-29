@@ -45,8 +45,8 @@ void MEF_UPDATE() {
 		break;
 		case OFF:
 		valorADC = ADC_Read();
-		if (valorADC == 1024){
-			if (state_call_count == 100) {
+		if (valorADC == 33){
+			if (state_call_count == 60) {
 				eSystem = PRENDIENDO;
 				state_call_count = -1;
 			}			

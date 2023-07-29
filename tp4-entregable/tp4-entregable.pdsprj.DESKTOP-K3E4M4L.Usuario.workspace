@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff0cf9ffff2d00000074ffffff2b040000</PLACEMENT>
+  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffff0cf9ffff2d00000074ffffff2b040000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
@@ -37,7 +37,7 @@
    <POPUP w="142" x="-763" flags="00000012" y="115" h="946" pid="4097" iid="4097">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="30" x="-1749" flags="00000008" y="133" h="16" pid="3" iid="12">
+   <POPUP w="226" x="-1749" flags="00000008" y="133" h="215" pid="3" iid="12">
     <PROPERTIES/>
    </POPUP>
    <POPUP w="1" x="-1915" flags="0000000a" y="83" h="1" pid="10" iid="12">
@@ -100,13 +100,13 @@
      <ITEM name="TopLineAddress">00000020</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1906" x="-1920" flags="0000002a" y="157" h="569" pid="1" iid="12">
+   <POPUP w="1906" x="-1911" flags="0000002a" y="97" h="569" pid="1" iid="12">
     <PROPERTIES>
-     <ITEM name="Breakpoint 0">"MEF_UPDATE",0216,0080,5434,F61C,1
+     <ITEM name="Breakpoint 0">"ADC_Read",00EE,0026,BDBC,0A1D,1
 </ITEM>
-     <ITEM name="Breakpoint 1">"MEF_UPDATE",0240,009E,A2BC,F61C,1
+     <ITEM name="Breakpoint 1">"ADC_Read",00EE,0026,BDBC,0A1D,1
 </ITEM>
-     <ITEM name="Breakpoint 2">"MEF_UPDATE",022C,008A,31B1,F61C,1
+     <ITEM name="Breakpoint 2">"ADC_Read",00F6,002E,BE92,0A1D,1
 </ITEM>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
@@ -114,10 +114,10 @@
      <ITEM name="DISPOPCODES">No</ITEM>
      <ITEM name="FIXUPBPTS">Yes</ITEM>
      <ITEM name="WordsOnly">No</ITEM>
-     <ITEM name="nBreakpoints">1</ITEM>
+     <ITEM name="nBreakpoints">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1910" x="-1918" flags="0000800b" y="725" h="325" pid="2" iid="12">
+   <POPUP w="1910" x="-1918" flags="0000000a" y="725" h="325" pid="2" iid="12">
     <PROPERTIES>
      <ITEM name="Address Column Width">509</ITEM>
      <ITEM name="AutoResize">No</ITEM>
