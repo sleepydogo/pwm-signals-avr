@@ -10,12 +10,14 @@
 #define MEF_H_
 
 #include <stdint.h>
+#include "pwm_generator.h"
+#include "ADC.h"
 void MEF_Init(void);
 void MEF_UPDATE();
 
-#define RED		51
+#define RED		56
 #define	GREEN	153
-#define BLUE	255		//LABEL un elisir
+#define BLUE	255
 
 typedef enum {
 	PRENDIENDO, MAX, APAGANDO, OFF

@@ -18,6 +18,7 @@ int main(void)
 	TIMER1_Init();
 	MEF_Init();
 	PWM_INIT_OUTPUTS();
+	ADC_Init();
 	sei();
 	while (1) {
 		if (MEF_flag) {

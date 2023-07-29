@@ -8,6 +8,7 @@
 #include "MEF.h"
 static t_eSystem eSystem;
 static uint8_t state_call_count;
+uint16_t valorADC = 0;
 
 void MEF_Init(){
 	eSystem = PRENDIENDO;
@@ -16,6 +17,7 @@ void MEF_Init(){
 
 void MEF_UPDATE() {
 	state_call_count++;
+	
 	switch (eSystem) {
 		case PRENDIENDO:
 		if (state_call_count < 10) {
@@ -42,10 +44,17 @@ void MEF_UPDATE() {
 		}
 		break;
 		case OFF:
-		if (state_call_count == 20) {
+		valorADC = ADC_Read();
+		if (valorADC == 1024){
+			if (state_call_count == 100) {
+				eSystem = PRENDIENDO;
+				state_call_count = -1;
+			}			
+		}else{
 			eSystem = PRENDIENDO;
 			state_call_count = -1;
+		}	
+		break;		
 		}
-		break;
-	}
+		
 }
