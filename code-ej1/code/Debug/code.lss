@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000000b0  00000000  00000000  000003b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000b7b  00000000  00000000  00000464  2**0
+  6 .debug_info   00000b7c  00000000  00000000  00000464  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000084c  00000000  00000000  00000fdf  2**0
+  7 .debug_abbrev 0000084c  00000000  00000000  00000fe0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000057d  00000000  00000000  0000182b  2**0
+  8 .debug_line   0000057d  00000000  00000000  0000182c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000138  00000000  00000000  00001da8  2**2
+  9 .debug_frame  00000138  00000000  00000000  00001dac  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000456  00000000  00000000  00001ee0  2**0
+ 10 .debug_str    00000456  00000000  00000000  00001ee4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000000ec  00000000  00000000  00002336  2**0
+ 11 .debug_loc    000000ec  00000000  00000000  0000233a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000070  00000000  00000000  00002422  2**0
+ 12 .debug_ranges 00000070  00000000  00000000  00002426  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -232,7 +232,7 @@ void MEF_UPDATE() {
  172:	0e 94 25 01 	call	0x24a	; 0x24a <PWM_UPDATE_DELTAS>
  176:	08 95       	ret
 		} else {
-			PWM_UPDATE_DELTAS((RED%10), (GREEN%10), (BLUE%10));
+			PWM_UPDATE_DELTAS((RED%10) , (GREEN%10), (BLUE%10));
  178:	45 e0       	ldi	r20, 0x05	; 5
  17a:	50 e0       	ldi	r21, 0x00	; 0
  17c:	63 e0       	ldi	r22, 0x03	; 3
@@ -250,9 +250,9 @@ void MEF_UPDATE() {
 		}
 		break;
 		case MAX:
-		if (state_call_count < 20) {
+		if (state_call_count == 20) {
  196:	84 31       	cpi	r24, 0x14	; 20
- 198:	40 f5       	brcc	.+80     	; 0x1ea <MEF_UPDATE+0xa6>
+ 198:	41 f5       	brne	.+80     	; 0x1ea <MEF_UPDATE+0xa6>
 			eSystem = APAGANDO;
  19a:	82 e0       	ldi	r24, 0x02	; 2
  19c:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <eSystem>
@@ -276,13 +276,13 @@ void MEF_UPDATE() {
  1b8:	0e 94 25 01 	call	0x24a	; 0x24a <PWM_UPDATE_DELTAS>
  1bc:	08 95       	ret
 		} else {
-			PWM_UPDATE_DELTAS(-RED%10 + 1, -GREEN%10 +1 , -BLUE%10 + 1);
- 1be:	4c ef       	ldi	r20, 0xFC	; 252
+			PWM_UPDATE_DELTAS(-RED%10, -GREEN%10, -BLUE%10);
+ 1be:	4b ef       	ldi	r20, 0xFB	; 251
  1c0:	5f ef       	ldi	r21, 0xFF	; 255
- 1c2:	6e ef       	ldi	r22, 0xFE	; 254
+ 1c2:	6d ef       	ldi	r22, 0xFD	; 253
  1c4:	7f ef       	ldi	r23, 0xFF	; 255
- 1c6:	80 e0       	ldi	r24, 0x00	; 0
- 1c8:	90 e0       	ldi	r25, 0x00	; 0
+ 1c6:	8f ef       	ldi	r24, 0xFF	; 255
+ 1c8:	9f ef       	ldi	r25, 0xFF	; 255
  1ca:	0e 94 25 01 	call	0x24a	; 0x24a <PWM_UPDATE_DELTAS>
 			eSystem = OFF;
  1ce:	83 e0       	ldi	r24, 0x03	; 3
@@ -294,9 +294,9 @@ void MEF_UPDATE() {
 		}
 		break;
 		case OFF:
-		if (state_call_count < 20) {
+		if (state_call_count == 20) {
  1dc:	84 31       	cpi	r24, 0x14	; 20
- 1de:	28 f4       	brcc	.+10     	; 0x1ea <MEF_UPDATE+0xa6>
+ 1de:	29 f4       	brne	.+10     	; 0x1ea <MEF_UPDATE+0xa6>
 			eSystem = PRENDIENDO;
  1e0:	10 92 06 01 	sts	0x0106, r1	; 0x800106 <eSystem>
 			state_call_count = -1;
@@ -306,7 +306,7 @@ void MEF_UPDATE() {
 
 000001ec <PWM_SOFTWARE_UPDATE>:
 	PORT_START;
-	PWM_CHANGE_DELTAS(1,1,1);
+	PWM_CHANGE_DELTAS(0,0,0);
 }
 
 void PWM_SOFTWARE_UPDATE(void) {
@@ -369,10 +369,10 @@ void PWM_INIT_OUTPUTS (void) {
  238:	84 b1       	in	r24, 0x04	; 4
  23a:	86 62       	ori	r24, 0x26	; 38
  23c:	84 b9       	out	0x04, r24	; 4
-	PWM_CHANGE_DELTAS(1,1,1);
- 23e:	41 e0       	ldi	r20, 0x01	; 1
- 240:	61 e0       	ldi	r22, 0x01	; 1
- 242:	81 e0       	ldi	r24, 0x01	; 1
+	PWM_CHANGE_DELTAS(0,0,0);
+ 23e:	40 e0       	ldi	r20, 0x00	; 0
+ 240:	60 e0       	ldi	r22, 0x00	; 0
+ 242:	80 e0       	ldi	r24, 0x00	; 0
  244:	0e 94 0f 01 	call	0x21e	; 0x21e <PWM_CHANGE_DELTAS>
  248:	08 95       	ret
 

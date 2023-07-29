@@ -467,13 +467,13 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xb7b
+.debug_info     0x00000000      0xb7c
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4      0x15a main.o
- .debug_info    0x0000074e      0x221 MEF.o
- .debug_info    0x0000096f      0x175 pwm_generator.o
- .debug_info    0x00000ae4       0x97 timer.o
+ .debug_info    0x0000074e      0x222 MEF.o
+ .debug_info    0x00000970      0x175 pwm_generator.o
+ .debug_info    0x00000ae5       0x97 timer.o
 
 .debug_abbrev   0x00000000      0x84c
  *(.debug_abbrev)

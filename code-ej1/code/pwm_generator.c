@@ -12,7 +12,7 @@ static uint8_t PWM_position = -1;
 
 void PWM_INIT_OUTPUTS (void) {
 	PORT_START;
-	PWM_CHANGE_DELTAS(1,1,1);
+	PWM_CHANGE_DELTAS(0,0,0);
 }
 
 void PWM_SOFTWARE_UPDATE(void) {
