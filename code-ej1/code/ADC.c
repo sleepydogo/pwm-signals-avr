@@ -26,18 +26,13 @@ void ADC_Init(){
 
 uint16_t ADC_Read(void){
 	
-	ADMUX &= 0xF0;
-	ADMUX |= 0x03;
-	
 	ADCSRA |= (1 << ADSC);
 	
 	while ((ADCSRA & (1 << ADIF)) == 0);
 	
 	ADCSRA |= (1 << ADIF);
-	
-	uint8_t lowByte = ADCL;
-	uint8_t highByte = ADCH;
-	uint16_t valorADC = (highByte << 8) | lowByte;
+
+	uint16_t valorADC = ADC;
 	
 	return valorADC;
 	

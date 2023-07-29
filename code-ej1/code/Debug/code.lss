@@ -3,31 +3,31 @@ code.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000002  00800100  00000322  000003b6  2**0
+  0 .data         00000002  00800100  0000030a  0000039e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000322  00000000  00000000  00000094  2**1
+  1 .text         0000030a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000007  00800102  00800102  000003b8  2**0
+  2 .bss          00000007  00800102  00800102  000003a0  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000003b8  2**0
+  3 .comment      00000030  00000000  00000000  000003a0  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000003e8  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000003d0  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000d8  00000000  00000000  00000428  2**0
+  5 .debug_aranges 000000d8  00000000  00000000  00000410  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000bed  00000000  00000000  00000500  2**0
+  6 .debug_info   00000bd4  00000000  00000000  000004e8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000008c7  00000000  00000000  000010ed  2**0
+  7 .debug_abbrev 000008b8  00000000  00000000  000010bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000006c2  00000000  00000000  000019b4  2**0
+  8 .debug_line   000006aa  00000000  00000000  00001974  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  0000016c  00000000  00000000  00002078  2**2
+  9 .debug_frame  0000016c  00000000  00000000  00002020  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000004be  00000000  00000000  000021e4  2**0
+ 10 .debug_str    000004ad  00000000  00000000  0000218c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000011a  00000000  00000000  000026a2  2**0
+ 11 .debug_loc    000000ec  00000000  00000000  00002639  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000088  00000000  00000000  000027bc  2**0
+ 12 .debug_ranges 00000088  00000000  00000000  00002725  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -47,7 +47,7 @@ Disassembly of section .text:
   2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  38:	0c 94 9a 00 	jmp	0x134	; 0x134 <__vector_14>
+  38:	0c 94 8e 00 	jmp	0x11c	; 0x11c <__vector_14>
   3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -72,7 +72,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e2 e2       	ldi	r30, 0x22	; 34
+  7a:	ea e0       	ldi	r30, 0x0A	; 10
   7c:	f3 e0       	ldi	r31, 0x03	; 3
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -94,8 +94,8 @@ Disassembly of section .text:
   94:	a9 30       	cpi	r26, 0x09	; 9
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 86 00 	call	0x10c	; 0x10c <main>
-  9e:	0c 94 8f 01 	jmp	0x31e	; 0x31e <_exit>
+  9a:	0e 94 7a 00 	call	0xf4	; 0xf4 <main>
+  9e:	0c 94 83 01 	jmp	0x306	; 0x306 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -144,375 +144,358 @@ void ADC_Init(){
 
 uint16_t ADC_Read(void){
 	
-	ADMUX &= 0xF0;
-  ce:	ec e7       	ldi	r30, 0x7C	; 124
+	ADCSRA |= (1 << ADSC);
+  ce:	ea e7       	ldi	r30, 0x7A	; 122
   d0:	f0 e0       	ldi	r31, 0x00	; 0
   d2:	80 81       	ld	r24, Z
-  d4:	80 7f       	andi	r24, 0xF0	; 240
+  d4:	80 64       	ori	r24, 0x40	; 64
   d6:	80 83       	st	Z, r24
-	ADMUX |= 0x03;
-  d8:	80 81       	ld	r24, Z
-  da:	83 60       	ori	r24, 0x03	; 3
-  dc:	80 83       	st	Z, r24
-	
-	ADCSRA |= (1 << ADSC);
-  de:	ea e7       	ldi	r30, 0x7A	; 122
-  e0:	f0 e0       	ldi	r31, 0x00	; 0
-  e2:	80 81       	ld	r24, Z
-  e4:	80 64       	ori	r24, 0x40	; 64
-  e6:	80 83       	st	Z, r24
 	
 	while ((ADCSRA & (1 << ADIF)) == 0);
-  e8:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
-  ec:	84 ff       	sbrs	r24, 4
-  ee:	fc cf       	rjmp	.-8      	; 0xe8 <ADC_Read+0x1a>
+  d8:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
+  dc:	84 ff       	sbrs	r24, 4
+  de:	fc cf       	rjmp	.-8      	; 0xd8 <ADC_Read+0xa>
 	
 	ADCSRA |= (1 << ADIF);
-  f0:	ea e7       	ldi	r30, 0x7A	; 122
-  f2:	f0 e0       	ldi	r31, 0x00	; 0
-  f4:	80 81       	ld	r24, Z
-  f6:	80 61       	ori	r24, 0x10	; 16
-  f8:	80 83       	st	Z, r24
-	
-	uint8_t lowByte = ADCL;
-  fa:	20 91 78 00 	lds	r18, 0x0078	; 0x800078 <__TEXT_REGION_LENGTH__+0x7f8078>
-	uint8_t highByte = ADCH;
-  fe:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
-	uint16_t valorADC = (highByte << 8) | lowByte;
- 102:	90 e0       	ldi	r25, 0x00	; 0
- 104:	98 2f       	mov	r25, r24
- 106:	88 27       	eor	r24, r24
+  e0:	ea e7       	ldi	r30, 0x7A	; 122
+  e2:	f0 e0       	ldi	r31, 0x00	; 0
+  e4:	80 81       	ld	r24, Z
+  e6:	80 61       	ori	r24, 0x10	; 16
+  e8:	80 83       	st	Z, r24
+
+	uint16_t valorADC = ADC;
+  ea:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__TEXT_REGION_LENGTH__+0x7f8078>
+  ee:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
 	
 	return valorADC;
 	
- 108:	82 2b       	or	r24, r18
- 10a:	08 95       	ret
+  f2:	08 95       	ret
 
-0000010c <main>:
+000000f4 <main>:
 static uint8_t MEF_flag = 0;
 uint16_t MEF_cont = 0;
 
 int main(void)
 {
 	TIMER0_Init();
- 10c:	0e 94 79 01 	call	0x2f2	; 0x2f2 <TIMER0_Init>
+  f4:	0e 94 6d 01 	call	0x2da	; 0x2da <TIMER0_Init>
 	TIMER1_Init();
- 110:	0e 94 81 01 	call	0x302	; 0x302 <TIMER1_Init>
+  f8:	0e 94 75 01 	call	0x2ea	; 0x2ea <TIMER1_Init>
 	MEF_Init();
- 114:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <MEF_Init>
+  fc:	0e 94 c5 00 	call	0x18a	; 0x18a <MEF_Init>
 	PWM_INIT_OUTPUTS();
- 118:	0e 94 56 01 	call	0x2ac	; 0x2ac <PWM_INIT_OUTPUTS>
+ 100:	0e 94 4a 01 	call	0x294	; 0x294 <PWM_INIT_OUTPUTS>
 	ADC_Init();
- 11c:	0e 94 53 00 	call	0xa6	; 0xa6 <ADC_Init>
+ 104:	0e 94 53 00 	call	0xa6	; 0xa6 <ADC_Init>
 	sei();
- 120:	78 94       	sei
+ 108:	78 94       	sei
 	while (1) {
 		if (MEF_flag) {
- 122:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <MEF_flag>
- 126:	88 23       	and	r24, r24
- 128:	e1 f3       	breq	.-8      	; 0x122 <main+0x16>
+ 10a:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <MEF_flag>
+ 10e:	88 23       	and	r24, r24
+ 110:	e1 f3       	breq	.-8      	; 0x10a <main+0x16>
 			MEF_UPDATE();
- 12a:	0e 94 d7 00 	call	0x1ae	; 0x1ae <MEF_UPDATE>
+ 112:	0e 94 cb 00 	call	0x196	; 0x196 <MEF_UPDATE>
 			MEF_flag = 0;
- 12e:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <MEF_flag>
- 132:	f7 cf       	rjmp	.-18     	; 0x122 <main+0x16>
+ 116:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <MEF_flag>
+ 11a:	f7 cf       	rjmp	.-18     	; 0x10a <main+0x16>
 
-00000134 <__vector_14>:
+0000011c <__vector_14>:
 		}
 	}
 }
 
 ISR (TIMER0_COMPA_vect) {
- 134:	1f 92       	push	r1
- 136:	0f 92       	push	r0
- 138:	0f b6       	in	r0, 0x3f	; 63
- 13a:	0f 92       	push	r0
- 13c:	11 24       	eor	r1, r1
- 13e:	2f 93       	push	r18
- 140:	3f 93       	push	r19
- 142:	4f 93       	push	r20
- 144:	5f 93       	push	r21
- 146:	6f 93       	push	r22
- 148:	7f 93       	push	r23
- 14a:	8f 93       	push	r24
- 14c:	9f 93       	push	r25
- 14e:	af 93       	push	r26
- 150:	bf 93       	push	r27
- 152:	ef 93       	push	r30
- 154:	ff 93       	push	r31
+ 11c:	1f 92       	push	r1
+ 11e:	0f 92       	push	r0
+ 120:	0f b6       	in	r0, 0x3f	; 63
+ 122:	0f 92       	push	r0
+ 124:	11 24       	eor	r1, r1
+ 126:	2f 93       	push	r18
+ 128:	3f 93       	push	r19
+ 12a:	4f 93       	push	r20
+ 12c:	5f 93       	push	r21
+ 12e:	6f 93       	push	r22
+ 130:	7f 93       	push	r23
+ 132:	8f 93       	push	r24
+ 134:	9f 93       	push	r25
+ 136:	af 93       	push	r26
+ 138:	bf 93       	push	r27
+ 13a:	ef 93       	push	r30
+ 13c:	ff 93       	push	r31
 	PWM_SOFTWARE_UPDATE();
- 156:	0e 94 30 01 	call	0x260	; 0x260 <PWM_SOFTWARE_UPDATE>
+ 13e:	0e 94 24 01 	call	0x248	; 0x248 <PWM_SOFTWARE_UPDATE>
 	if (++ MEF_cont == 1269) { // Cada 50ms se chequea la MEF
- 15a:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
- 15e:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <__data_end+0x1>
- 162:	01 96       	adiw	r24, 0x01	; 1
- 164:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <__data_end+0x1>
- 168:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <__data_end>
- 16c:	85 3f       	cpi	r24, 0xF5	; 245
- 16e:	94 40       	sbci	r25, 0x04	; 4
- 170:	39 f4       	brne	.+14     	; 0x180 <__vector_14+0x4c>
+ 142:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <__data_end>
+ 146:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <__data_end+0x1>
+ 14a:	01 96       	adiw	r24, 0x01	; 1
+ 14c:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <__data_end+0x1>
+ 150:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <__data_end>
+ 154:	85 3f       	cpi	r24, 0xF5	; 245
+ 156:	94 40       	sbci	r25, 0x04	; 4
+ 158:	39 f4       	brne	.+14     	; 0x168 <__vector_14+0x4c>
 		MEF_flag = 1;
- 172:	81 e0       	ldi	r24, 0x01	; 1
- 174:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <MEF_flag>
+ 15a:	81 e0       	ldi	r24, 0x01	; 1
+ 15c:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <MEF_flag>
 		MEF_cont = 0;
- 178:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <__data_end+0x1>
- 17c:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <__data_end>
+ 160:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <__data_end+0x1>
+ 164:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <__data_end>
 	}
 }
- 180:	ff 91       	pop	r31
- 182:	ef 91       	pop	r30
- 184:	bf 91       	pop	r27
- 186:	af 91       	pop	r26
- 188:	9f 91       	pop	r25
- 18a:	8f 91       	pop	r24
- 18c:	7f 91       	pop	r23
- 18e:	6f 91       	pop	r22
- 190:	5f 91       	pop	r21
- 192:	4f 91       	pop	r20
- 194:	3f 91       	pop	r19
- 196:	2f 91       	pop	r18
- 198:	0f 90       	pop	r0
- 19a:	0f be       	out	0x3f, r0	; 63
- 19c:	0f 90       	pop	r0
- 19e:	1f 90       	pop	r1
- 1a0:	18 95       	reti
+ 168:	ff 91       	pop	r31
+ 16a:	ef 91       	pop	r30
+ 16c:	bf 91       	pop	r27
+ 16e:	af 91       	pop	r26
+ 170:	9f 91       	pop	r25
+ 172:	8f 91       	pop	r24
+ 174:	7f 91       	pop	r23
+ 176:	6f 91       	pop	r22
+ 178:	5f 91       	pop	r21
+ 17a:	4f 91       	pop	r20
+ 17c:	3f 91       	pop	r19
+ 17e:	2f 91       	pop	r18
+ 180:	0f 90       	pop	r0
+ 182:	0f be       	out	0x3f, r0	; 63
+ 184:	0f 90       	pop	r0
+ 186:	1f 90       	pop	r1
+ 188:	18 95       	reti
 
-000001a2 <MEF_Init>:
+0000018a <MEF_Init>:
 static t_eSystem eSystem;
 static uint8_t state_call_count;
 uint16_t valorADC = 0;
 
 void MEF_Init(){
 	eSystem = PRENDIENDO;
- 1a2:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <eSystem>
+ 18a:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <eSystem>
 	state_call_count = -1;
- 1a6:	8f ef       	ldi	r24, 0xFF	; 255
- 1a8:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
- 1ac:	08 95       	ret
+ 18e:	8f ef       	ldi	r24, 0xFF	; 255
+ 190:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 194:	08 95       	ret
 
-000001ae <MEF_UPDATE>:
+00000196 <MEF_UPDATE>:
 }
 
 void MEF_UPDATE() {
 	state_call_count++;
- 1ae:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <state_call_count>
- 1b2:	8f 5f       	subi	r24, 0xFF	; 255
- 1b4:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 196:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <state_call_count>
+ 19a:	8f 5f       	subi	r24, 0xFF	; 255
+ 19c:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
 	
 	switch (eSystem) {
- 1b8:	90 91 08 01 	lds	r25, 0x0108	; 0x800108 <eSystem>
- 1bc:	91 30       	cpi	r25, 0x01	; 1
- 1be:	d1 f0       	breq	.+52     	; 0x1f4 <MEF_UPDATE+0x46>
- 1c0:	28 f0       	brcs	.+10     	; 0x1cc <MEF_UPDATE+0x1e>
- 1c2:	92 30       	cpi	r25, 0x02	; 2
- 1c4:	01 f1       	breq	.+64     	; 0x206 <MEF_UPDATE+0x58>
- 1c6:	93 30       	cpi	r25, 0x03	; 3
- 1c8:	91 f1       	breq	.+100    	; 0x22e <MEF_UPDATE+0x80>
- 1ca:	08 95       	ret
+ 1a0:	90 91 08 01 	lds	r25, 0x0108	; 0x800108 <eSystem>
+ 1a4:	91 30       	cpi	r25, 0x01	; 1
+ 1a6:	d1 f0       	breq	.+52     	; 0x1dc <MEF_UPDATE+0x46>
+ 1a8:	28 f0       	brcs	.+10     	; 0x1b4 <MEF_UPDATE+0x1e>
+ 1aa:	92 30       	cpi	r25, 0x02	; 2
+ 1ac:	01 f1       	breq	.+64     	; 0x1ee <MEF_UPDATE+0x58>
+ 1ae:	93 30       	cpi	r25, 0x03	; 3
+ 1b0:	91 f1       	breq	.+100    	; 0x216 <MEF_UPDATE+0x80>
+ 1b2:	08 95       	ret
 		case PRENDIENDO:
 		if (state_call_count < 10) {
- 1cc:	8a 30       	cpi	r24, 0x0A	; 10
- 1ce:	30 f4       	brcc	.+12     	; 0x1dc <MEF_UPDATE+0x2e>
+ 1b4:	8a 30       	cpi	r24, 0x0A	; 10
+ 1b6:	30 f4       	brcc	.+12     	; 0x1c4 <MEF_UPDATE+0x2e>
 			PWM_UPDATE_DELTAS((RED/10), (GREEN/10), (BLUE/10));
- 1d0:	49 e1       	ldi	r20, 0x19	; 25
- 1d2:	6f e0       	ldi	r22, 0x0F	; 15
- 1d4:	85 e0       	ldi	r24, 0x05	; 5
- 1d6:	0e 94 5f 01 	call	0x2be	; 0x2be <PWM_UPDATE_DELTAS>
- 1da:	08 95       	ret
+ 1b8:	49 e1       	ldi	r20, 0x19	; 25
+ 1ba:	6f e0       	ldi	r22, 0x0F	; 15
+ 1bc:	85 e0       	ldi	r24, 0x05	; 5
+ 1be:	0e 94 53 01 	call	0x2a6	; 0x2a6 <PWM_UPDATE_DELTAS>
+ 1c2:	08 95       	ret
 		} else {
 			PWM_UPDATE_DELTAS((RED%10) , (GREEN%10), (BLUE%10));
- 1dc:	45 e0       	ldi	r20, 0x05	; 5
- 1de:	63 e0       	ldi	r22, 0x03	; 3
- 1e0:	86 e0       	ldi	r24, 0x06	; 6
- 1e2:	0e 94 5f 01 	call	0x2be	; 0x2be <PWM_UPDATE_DELTAS>
+ 1c4:	45 e0       	ldi	r20, 0x05	; 5
+ 1c6:	63 e0       	ldi	r22, 0x03	; 3
+ 1c8:	86 e0       	ldi	r24, 0x06	; 6
+ 1ca:	0e 94 53 01 	call	0x2a6	; 0x2a6 <PWM_UPDATE_DELTAS>
 			eSystem = MAX;
- 1e6:	81 e0       	ldi	r24, 0x01	; 1
- 1e8:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <eSystem>
+ 1ce:	81 e0       	ldi	r24, 0x01	; 1
+ 1d0:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <eSystem>
 			state_call_count = -1;
- 1ec:	8f ef       	ldi	r24, 0xFF	; 255
- 1ee:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
- 1f2:	08 95       	ret
+ 1d4:	8f ef       	ldi	r24, 0xFF	; 255
+ 1d6:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 1da:	08 95       	ret
 		}
 		break;
 		case MAX:
 		if (state_call_count == 20) {
- 1f4:	84 31       	cpi	r24, 0x14	; 20
- 1f6:	99 f5       	brne	.+102    	; 0x25e <MEF_UPDATE+0xb0>
+ 1dc:	84 31       	cpi	r24, 0x14	; 20
+ 1de:	99 f5       	brne	.+102    	; 0x246 <MEF_UPDATE+0xb0>
 			eSystem = APAGANDO;
- 1f8:	82 e0       	ldi	r24, 0x02	; 2
- 1fa:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <eSystem>
+ 1e0:	82 e0       	ldi	r24, 0x02	; 2
+ 1e2:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <eSystem>
 			state_call_count = -1;
- 1fe:	8f ef       	ldi	r24, 0xFF	; 255
- 200:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
- 204:	08 95       	ret
+ 1e6:	8f ef       	ldi	r24, 0xFF	; 255
+ 1e8:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 1ec:	08 95       	ret
 		}
 		break;
 		case APAGANDO:
 		if (state_call_count < 10) {
- 206:	8a 30       	cpi	r24, 0x0A	; 10
- 208:	30 f4       	brcc	.+12     	; 0x216 <MEF_UPDATE+0x68>
+ 1ee:	8a 30       	cpi	r24, 0x0A	; 10
+ 1f0:	30 f4       	brcc	.+12     	; 0x1fe <MEF_UPDATE+0x68>
 			PWM_UPDATE_DELTAS(-(RED/10), -(GREEN/10), -(BLUE/10));
- 20a:	47 ee       	ldi	r20, 0xE7	; 231
- 20c:	61 ef       	ldi	r22, 0xF1	; 241
- 20e:	8b ef       	ldi	r24, 0xFB	; 251
- 210:	0e 94 5f 01 	call	0x2be	; 0x2be <PWM_UPDATE_DELTAS>
- 214:	08 95       	ret
+ 1f2:	47 ee       	ldi	r20, 0xE7	; 231
+ 1f4:	61 ef       	ldi	r22, 0xF1	; 241
+ 1f6:	8b ef       	ldi	r24, 0xFB	; 251
+ 1f8:	0e 94 53 01 	call	0x2a6	; 0x2a6 <PWM_UPDATE_DELTAS>
+ 1fc:	08 95       	ret
 		} else {
 			PWM_UPDATE_DELTAS(-RED%10, -GREEN%10, -BLUE%10);
- 216:	4b ef       	ldi	r20, 0xFB	; 251
- 218:	6d ef       	ldi	r22, 0xFD	; 253
- 21a:	8a ef       	ldi	r24, 0xFA	; 250
- 21c:	0e 94 5f 01 	call	0x2be	; 0x2be <PWM_UPDATE_DELTAS>
+ 1fe:	4b ef       	ldi	r20, 0xFB	; 251
+ 200:	6d ef       	ldi	r22, 0xFD	; 253
+ 202:	8a ef       	ldi	r24, 0xFA	; 250
+ 204:	0e 94 53 01 	call	0x2a6	; 0x2a6 <PWM_UPDATE_DELTAS>
 			eSystem = OFF;
- 220:	83 e0       	ldi	r24, 0x03	; 3
- 222:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <eSystem>
+ 208:	83 e0       	ldi	r24, 0x03	; 3
+ 20a:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <eSystem>
 			state_call_count = -1;
- 226:	8f ef       	ldi	r24, 0xFF	; 255
- 228:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
- 22c:	08 95       	ret
+ 20e:	8f ef       	ldi	r24, 0xFF	; 255
+ 210:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 214:	08 95       	ret
 		}
 		break;
 		case OFF:
 		valorADC = ADC_Read();
- 22e:	0e 94 67 00 	call	0xce	; 0xce <ADC_Read>
- 232:	90 93 06 01 	sts	0x0106, r25	; 0x800106 <valorADC+0x1>
- 236:	80 93 05 01 	sts	0x0105, r24	; 0x800105 <valorADC>
+ 216:	0e 94 67 00 	call	0xce	; 0xce <ADC_Read>
+ 21a:	90 93 06 01 	sts	0x0106, r25	; 0x800106 <valorADC+0x1>
+ 21e:	80 93 05 01 	sts	0x0105, r24	; 0x800105 <valorADC>
 		if (valorADC == 1024){
- 23a:	81 15       	cp	r24, r1
- 23c:	94 40       	sbci	r25, 0x04	; 4
- 23e:	51 f4       	brne	.+20     	; 0x254 <MEF_UPDATE+0xa6>
+ 222:	81 15       	cp	r24, r1
+ 224:	94 40       	sbci	r25, 0x04	; 4
+ 226:	51 f4       	brne	.+20     	; 0x23c <MEF_UPDATE+0xa6>
 			if (state_call_count == 100) {
- 240:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <state_call_count>
- 244:	84 36       	cpi	r24, 0x64	; 100
- 246:	59 f4       	brne	.+22     	; 0x25e <MEF_UPDATE+0xb0>
+ 228:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <state_call_count>
+ 22c:	84 36       	cpi	r24, 0x64	; 100
+ 22e:	59 f4       	brne	.+22     	; 0x246 <MEF_UPDATE+0xb0>
 				eSystem = PRENDIENDO;
- 248:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <eSystem>
+ 230:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <eSystem>
 				state_call_count = -1;
- 24c:	8f ef       	ldi	r24, 0xFF	; 255
- 24e:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
- 252:	08 95       	ret
+ 234:	8f ef       	ldi	r24, 0xFF	; 255
+ 236:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 23a:	08 95       	ret
 			}			
 		}else{
 			eSystem = PRENDIENDO;
- 254:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <eSystem>
+ 23c:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <eSystem>
 			state_call_count = -1;
- 258:	8f ef       	ldi	r24, 0xFF	; 255
- 25a:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
- 25e:	08 95       	ret
+ 240:	8f ef       	ldi	r24, 0xFF	; 255
+ 242:	80 93 07 01 	sts	0x0107, r24	; 0x800107 <state_call_count>
+ 246:	08 95       	ret
 
-00000260 <PWM_SOFTWARE_UPDATE>:
- 260:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
- 264:	8f 5f       	subi	r24, 0xFF	; 255
- 266:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
- 26a:	8f 3f       	cpi	r24, 0xFF	; 255
- 26c:	31 f4       	brne	.+12     	; 0x27a <PWM_SOFTWARE_UPDATE+0x1a>
- 26e:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
+00000248 <PWM_SOFTWARE_UPDATE>:
+ 248:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 24c:	8f 5f       	subi	r24, 0xFF	; 255
+ 24e:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 252:	8f 3f       	cpi	r24, 0xFF	; 255
+ 254:	31 f4       	brne	.+12     	; 0x262 <PWM_SOFTWARE_UPDATE+0x1a>
+ 256:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 25a:	85 b1       	in	r24, 0x05	; 5
+ 25c:	80 62       	ori	r24, 0x20	; 32
+ 25e:	85 b9       	out	0x05, r24	; 5
+ 260:	08 95       	ret
+ 262:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <delta_red>
+ 266:	89 17       	cp	r24, r25
+ 268:	20 f4       	brcc	.+8      	; 0x272 <PWM_SOFTWARE_UPDATE+0x2a>
+ 26a:	85 b1       	in	r24, 0x05	; 5
+ 26c:	8f 7d       	andi	r24, 0xDF	; 223
+ 26e:	85 b9       	out	0x05, r24	; 5
+ 270:	08 95       	ret
  272:	85 b1       	in	r24, 0x05	; 5
  274:	80 62       	ori	r24, 0x20	; 32
  276:	85 b9       	out	0x05, r24	; 5
  278:	08 95       	ret
- 27a:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <delta_red>
- 27e:	89 17       	cp	r24, r25
- 280:	20 f4       	brcc	.+8      	; 0x28a <PWM_SOFTWARE_UPDATE+0x2a>
- 282:	85 b1       	in	r24, 0x05	; 5
- 284:	8f 7d       	andi	r24, 0xDF	; 223
- 286:	85 b9       	out	0x05, r24	; 5
- 288:	08 95       	ret
- 28a:	85 b1       	in	r24, 0x05	; 5
- 28c:	80 62       	ori	r24, 0x20	; 32
- 28e:	85 b9       	out	0x05, r24	; 5
- 290:	08 95       	ret
 
-00000292 <PWM_CHANGE_DELTAS>:
- 292:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <delta_red>
- 296:	70 e0       	ldi	r23, 0x00	; 0
- 298:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
- 29c:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
- 2a0:	50 e0       	ldi	r21, 0x00	; 0
- 2a2:	50 93 89 00 	sts	0x0089, r21	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
- 2a6:	40 93 88 00 	sts	0x0088, r20	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
- 2aa:	08 95       	ret
+0000027a <PWM_CHANGE_DELTAS>:
+ 27a:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <delta_red>
+ 27e:	70 e0       	ldi	r23, 0x00	; 0
+ 280:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+ 284:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+ 288:	50 e0       	ldi	r21, 0x00	; 0
+ 28a:	50 93 89 00 	sts	0x0089, r21	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ 28e:	40 93 88 00 	sts	0x0088, r20	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+ 292:	08 95       	ret
 
-000002ac <PWM_INIT_OUTPUTS>:
- 2ac:	84 b1       	in	r24, 0x04	; 4
- 2ae:	86 62       	ori	r24, 0x26	; 38
- 2b0:	84 b9       	out	0x04, r24	; 4
- 2b2:	40 e0       	ldi	r20, 0x00	; 0
- 2b4:	60 e0       	ldi	r22, 0x00	; 0
- 2b6:	80 e0       	ldi	r24, 0x00	; 0
- 2b8:	0e 94 49 01 	call	0x292	; 0x292 <PWM_CHANGE_DELTAS>
- 2bc:	08 95       	ret
+00000294 <PWM_INIT_OUTPUTS>:
+ 294:	84 b1       	in	r24, 0x04	; 4
+ 296:	86 62       	ori	r24, 0x26	; 38
+ 298:	84 b9       	out	0x04, r24	; 4
+ 29a:	40 e0       	ldi	r20, 0x00	; 0
+ 29c:	60 e0       	ldi	r22, 0x00	; 0
+ 29e:	80 e0       	ldi	r24, 0x00	; 0
+ 2a0:	0e 94 3d 01 	call	0x27a	; 0x27a <PWM_CHANGE_DELTAS>
+ 2a4:	08 95       	ret
 
-000002be <PWM_UPDATE_DELTAS>:
- 2be:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <delta_red>
- 2c2:	89 0f       	add	r24, r25
- 2c4:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <delta_red>
- 2c8:	ea e8       	ldi	r30, 0x8A	; 138
- 2ca:	f0 e0       	ldi	r31, 0x00	; 0
- 2cc:	80 81       	ld	r24, Z
- 2ce:	91 81       	ldd	r25, Z+1	; 0x01
- 2d0:	86 0f       	add	r24, r22
- 2d2:	91 1d       	adc	r25, r1
- 2d4:	67 fd       	sbrc	r22, 7
- 2d6:	9a 95       	dec	r25
- 2d8:	91 83       	std	Z+1, r25	; 0x01
- 2da:	80 83       	st	Z, r24
- 2dc:	e8 e8       	ldi	r30, 0x88	; 136
- 2de:	f0 e0       	ldi	r31, 0x00	; 0
- 2e0:	80 81       	ld	r24, Z
- 2e2:	91 81       	ldd	r25, Z+1	; 0x01
- 2e4:	84 0f       	add	r24, r20
- 2e6:	91 1d       	adc	r25, r1
- 2e8:	47 fd       	sbrc	r20, 7
- 2ea:	9a 95       	dec	r25
- 2ec:	91 83       	std	Z+1, r25	; 0x01
- 2ee:	80 83       	st	Z, r24
- 2f0:	08 95       	ret
+000002a6 <PWM_UPDATE_DELTAS>:
+ 2a6:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <delta_red>
+ 2aa:	89 0f       	add	r24, r25
+ 2ac:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <delta_red>
+ 2b0:	ea e8       	ldi	r30, 0x8A	; 138
+ 2b2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2b4:	80 81       	ld	r24, Z
+ 2b6:	91 81       	ldd	r25, Z+1	; 0x01
+ 2b8:	86 0f       	add	r24, r22
+ 2ba:	91 1d       	adc	r25, r1
+ 2bc:	67 fd       	sbrc	r22, 7
+ 2be:	9a 95       	dec	r25
+ 2c0:	91 83       	std	Z+1, r25	; 0x01
+ 2c2:	80 83       	st	Z, r24
+ 2c4:	e8 e8       	ldi	r30, 0x88	; 136
+ 2c6:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c8:	80 81       	ld	r24, Z
+ 2ca:	91 81       	ldd	r25, Z+1	; 0x01
+ 2cc:	84 0f       	add	r24, r20
+ 2ce:	91 1d       	adc	r25, r1
+ 2d0:	47 fd       	sbrc	r20, 7
+ 2d2:	9a 95       	dec	r25
+ 2d4:	91 83       	std	Z+1, r25	; 0x01
+ 2d6:	80 83       	st	Z, r24
+ 2d8:	08 95       	ret
 
-000002f2 <TIMER0_Init>:
+000002da <TIMER0_Init>:
 
 #include "timer.h"
 
 //				Timer0	- interrupcion cada 39,4 us aprox
 void TIMER0_Init(){
 	OCR0A  = 78;            
- 2f2:	8e e4       	ldi	r24, 0x4E	; 78
- 2f4:	87 bd       	out	0x27, r24	; 39
+ 2da:	8e e4       	ldi	r24, 0x4E	; 78
+ 2dc:	87 bd       	out	0x27, r24	; 39
 	TCCR0A = (1<<WGM01);   // Modo CTC, clock interno, prescalador 8
- 2f6:	82 e0       	ldi	r24, 0x02	; 2
- 2f8:	84 bd       	out	0x24, r24	; 36
+ 2de:	82 e0       	ldi	r24, 0x02	; 2
+ 2e0:	84 bd       	out	0x24, r24	; 36
 	TCCR0B = (1<<CS01);   
- 2fa:	85 bd       	out	0x25, r24	; 37
+ 2e2:	85 bd       	out	0x25, r24	; 37
 	TIMSK0 = (1<<OCIE0A);   // Habilito Timer 0 en modo de interrupci�n de comparaci�n
- 2fc:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7f806e>
- 300:	08 95       	ret
+ 2e4:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7f806e>
+ 2e8:	08 95       	ret
 
-00000302 <TIMER1_Init>:
+000002ea <TIMER1_Init>:
 //				Timer1
 void TIMER1_Init(){
 		
 		// Modo Fast PWM de 8 bits (WGM1[3:0] = 5)
 		// N -> 1024 
 		TCCR1B |= (1<<WGM12)|(1<<CS12)|(1<<CS10);
- 302:	e1 e8       	ldi	r30, 0x81	; 129
- 304:	f0 e0       	ldi	r31, 0x00	; 0
- 306:	80 81       	ld	r24, Z
- 308:	8d 60       	ori	r24, 0x0D	; 13
- 30a:	80 83       	st	Z, r24
+ 2ea:	e1 e8       	ldi	r30, 0x81	; 129
+ 2ec:	f0 e0       	ldi	r31, 0x00	; 0
+ 2ee:	80 81       	ld	r24, Z
+ 2f0:	8d 60       	ori	r24, 0x0D	; 13
+ 2f2:	80 83       	st	Z, r24
 		TCCR1A |= (1<<WGM10)|(1<<COM1A1)|(1<<COM1A0); // Para OC1A
- 30c:	e0 e8       	ldi	r30, 0x80	; 128
- 30e:	f0 e0       	ldi	r31, 0x00	; 0
- 310:	80 81       	ld	r24, Z
- 312:	81 6c       	ori	r24, 0xC1	; 193
- 314:	80 83       	st	Z, r24
+ 2f4:	e0 e8       	ldi	r30, 0x80	; 128
+ 2f6:	f0 e0       	ldi	r31, 0x00	; 0
+ 2f8:	80 81       	ld	r24, Z
+ 2fa:	81 6c       	ori	r24, 0xC1	; 193
+ 2fc:	80 83       	st	Z, r24
 		TCCR1A |= (1<<COM1B1)|(1<<COM1B0); // Para OC1B
- 316:	80 81       	ld	r24, Z
- 318:	80 63       	ori	r24, 0x30	; 48
- 31a:	80 83       	st	Z, r24
- 31c:	08 95       	ret
+ 2fe:	80 81       	ld	r24, Z
+ 300:	80 63       	ori	r24, 0x30	; 48
+ 302:	80 83       	st	Z, r24
+ 304:	08 95       	ret
 
-0000031e <_exit>:
- 31e:	f8 94       	cli
+00000306 <_exit>:
+ 306:	f8 94       	cli
 
-00000320 <__stop_program>:
- 320:	ff cf       	rjmp	.-2      	; 0x320 <__stop_program>
+00000308 <__stop_program>:
+ 308:	ff cf       	rjmp	.-2      	; 0x308 <__stop_program>
