@@ -2,7 +2,7 @@
  * pwm_generator.c
  *
  * Created: 28/7/2023 19:50:52
- *  Author: Tom
+ *  Author: Tom & Marian
  */ 
 
 #include "pwm_generator.h"

@@ -39,18 +39,22 @@ void MEF_UPDATE() {
 			PWM_UPDATE_DELTAS(-(RED/10), -(GREEN/10), -(BLUE/10));
 		} else {
 			PWM_UPDATE_DELTAS(-RED%10, -GREEN%10, -BLUE%10);
+			TIMER1_OFF();
+			PORTB |= (1 << PORTB5);
 			eSystem = OFF;
 			state_call_count = -1;
 		}
 		break;
 		case OFF:
 		valorADC = ADC_Read();
-		if (valorADC == 33){
+		if (valorADC < 1000){
 			if (state_call_count == 60) {
+				TIMER1_ON();
 				eSystem = PRENDIENDO;
 				state_call_count = -1;
 			}			
 		}else{
+			TIMER1_ON();
 			eSystem = PRENDIENDO;
 			state_call_count = -1;
 		}	

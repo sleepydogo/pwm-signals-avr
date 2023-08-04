@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffff0cf9ffff2d00000074ffffff2b040000</PLACEMENT>
+  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff8900000000000000f10600001e040000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
+  <WINDOW type="default" module="DXP"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
   <PWI>
@@ -100,11 +101,11 @@
      <ITEM name="TopLineAddress">00000020</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1906" x="-1911" flags="0000002a" y="97" h="569" pid="1" iid="12">
+   <POPUP w="1367" x="318" flags="0000002a" y="262" h="569" pid="1" iid="12">
     <PROPERTIES>
-     <ITEM name="Breakpoint 0">"ADC_Read",00EE,0026,BDBC,0A1D,1
+     <ITEM name="Breakpoint 0">"MEF_UPDATE",01DA,0038,C04D,F61C,1
 </ITEM>
-     <ITEM name="Breakpoint 1">"ADC_Read",00EE,0026,BDBC,0A1D,1
+     <ITEM name="Breakpoint 1">"MEF_UPDATE",01EC,004A,65BD,F61C,1
 </ITEM>
      <ITEM name="Breakpoint 2">"ADC_Read",00F6,002E,BE92,0A1D,1
 </ITEM>
@@ -117,12 +118,12 @@
      <ITEM name="nBreakpoints">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="1910" x="-1918" flags="0000000a" y="725" h="325" pid="2" iid="12">
+   <POPUP w="395" x="1233" flags="0000000a" y="513" h="409" pid="2" iid="12">
     <PROPERTIES>
-     <ITEM name="Address Column Width">509</ITEM>
+     <ITEM name="Address Column Width">102</ITEM>
      <ITEM name="AutoResize">No</ITEM>
      <ITEM name="Gridlines">Yes</ITEM>
-     <ITEM name="Name Column Width">509</ITEM>
+     <ITEM name="Name Column Width">104</ITEM>
      <ITEM name="ShowAddresses">Yes</ITEM>
      <ITEM name="ShowGlobals">Yes</ITEM>
      <ITEM name="ShowPreviousValues">No</ITEM>

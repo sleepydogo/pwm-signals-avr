@@ -4,6 +4,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdio.h>
 #include "timer.h"
 #include "pwm_generator.h"
 #include "MEF.h"
